@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CCCS 102 Midterm Flashcards</title>
+<style>
+:root{--bg:#f4f5f9;--fg:#1c2033;--front:#fff;--back:#eef2ff;--ac:#4f46e5;--mut:#6b7280;--ok:#16a34a;--no:#dc2626;--bd:#dfe2ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12141c;--fg:#e8eaf3;--front:#1c1f2b;--back:#262a46;--ac:#8b85ff;--mut:#9aa0b4;--bd:#2f3345}}
+:root[data-theme="dark"]{--bg:#12141c;--fg:#e8eaf3;--front:#1c1f2b;--back:#262a46;--ac:#8b85ff;--mut:#9aa0b4;--bd:#2f3345}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.app{max-width:720px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+h1{font-size:1.05rem;margin:0;text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.bar{height:8px;background:var(--bd);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.scene{perspective:1400px}
+.card{display:grid;cursor:pointer;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.2,.2,1);min-height:340px;-webkit-tap-highlight-color:transparent}
+.card.flip{transform:rotateY(180deg)}
+.card.nt{transition:none}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;padding:22px;border:1px solid var(--bd);box-shadow:0 10px 30px rgba(0,0,0,.12);display:flex;flex-direction:column;gap:12px}
+.front{background:var(--front)}
+.back{background:var(--back);transform:rotateY(180deg);border-top:6px solid var(--ok)}
+.front{border-top:6px solid var(--ac)}
+.tag{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.txt{white-space:pre-wrap;font-size:1.1rem;line-height:1.55;flex:1;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
+.hint{font-size:.78rem;color:var(--mut);text-align:center}
+.row{display:flex;gap:10px}
+button{flex:1;font:inherit;font-weight:600;padding:13px 10px;border-radius:12px;border:1px solid var(--bd);background:var(--front);color:var(--fg);cursor:pointer}
+button:active{transform:scale(.97)}
+.know{background:var(--ok);color:#fff;border:0}.rev{background:var(--no);color:#fff;border:0}
+.stats{display:flex;justify-content:center;gap:22px;font-weight:600}
+.stats .k{color:var(--ok)}.stats .r{color:var(--no)}
+@media(prefers-reduced-motion:reduce){.card{transition-duration:.01s}}
+</style></head>
+<body><div class="app">
+<h1>CCCS 102 · Midterm Flashcards</h1>
+<div class="top"><span id="pos"></span><span id="mark" class="tag"></span></div>
+<div class="bar"><i id="fill"></i></div>
+<div class="scene"><div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard. Tap to flip.">
+<div class="face front"><div class="tag" id="ft"></div><div class="txt" id="q"></div><div class="hint">Tap card to reveal answer</div></div>
+<div class="face back"><div class="tag">Answer</div><div class="txt" id="a"></div><div class="hint">Tap card to return to question</div></div>
+</div></div>
+<div class="row"><button id="prev">← Previous</button><button id="next">Next →</button></div>
+<div class="row"><button class="know" id="know">✓ I Know</button><button class="rev" id="rev">✕ Need Review</button></div>
+<div class="stats"><span class="k" id="sk"></span><span class="r" id="sr"></span><span id="su"></span></div>
+<div class="row"><button id="shuf">🔀 Shuffle</button><button id="reset">↺ Restart</button></div>
+</div>
+<script>
+const RAW=String.raw`Which computational model describes the flow where raw data is received, transformed according to specified rules, and rendered back as structured information?
+A. Read-Evaluate-Print-Loop (REPL)
+B. Input-Processing-Output (IPO)
+C. Ahead-Of-Time (AOT) Compilation
+D. Model-View-Controller (MVC)
+@@
+B. Input-Processing-Output (IPO)
+Explanation: The IPO pattern is the foundational model for software architecture, where data enters the system (Input), undergoes algorithmic logic (Processing), and renders results (Output).
+##
+Dutch computer scientist Guido van Rossum created Python in 1991 and named it after which of the following?
+A. The non-venomous constrictor snake family Pythonidae
+B. The British comedy television show Monty Python's Flying Circus
+C. The Python programming paradigm introduced in C++
+D. An acronym for "Systematic Pythonic Object Notation"
+@@
+B. The British comedy television show Monty Python's Flying Circus
+Explanation: Guido van Rossum named Python after the BBC comedy series Monty Python's Flying Circus while looking for a short, unique, and slightly irreverent name.
+##
+Which property of an algorithm, according to Donald Knuth, guarantees that every single instruction must be clear, unambiguous, and leave zero room for interpretation?
+A. Finiteness
+B. Definiteness
+C. Effectiveness
+D. Feasibility
+@@
+B. Definiteness
+Explanation: According to Donald Knuth's 5 criteria, Definiteness dictates that every operation must be clear, unambiguous, and strictly defined.
+##
+What translation execution model does standard Python (CPython) utilize?
+A. Pure Ahead-Of-Time (AOT) Compilation directly to host CPU assembly
+B. Pure Line-by-Line Source Text Interpretation without intermediate compilation
+C. A Hybrid Model that compiles source code into Bytecode (.pyc) before running on a Virtual Machine (PVM)
+D. Direct Hardware Execution via CPU Microcode registers
+@@
+C. A Hybrid Model that compiles source code into Bytecode (.pyc) before running on a Virtual Machine (PVM)
+Explanation: CPython first compiles human-readable .py source text into platform-neutral Bytecode (.pyc), which is then executed line-by-line by the Python Virtual Machine (PVM).
+##
+In CCCS 102 standard flowcharting (ANSI/ISO 5807), which geometric symbol must be used to represent an assignment operation such as SET total = count + 1?
+A. Parallelogram
+B. Oval / Rounded Rectangle
+C. Diamond / Rhombus
+D. Rectangle
+@@
+D. Rectangle
+Explanation: In ANSI/ISO 5807 flowchart standards, rectangles represent Process steps (calculations, assignments), while parallelograms represent Input/Output.
+##
+What system configuration is required for a command-line terminal to recognize the python command from any current working directory?
+A. The Python interpreter executable path must be registered in the system PATH environment variable.
+B. The script file must be saved inside the __pycache__ folder.
+C. Visual Studio Code must be running with Administrator privileges.
+D. The Python script must begin with a import sys statement.
+@@
+A. The Python interpreter executable path must be registered in the system PATH environment variable.
+Explanation: The operating system checks directories listed in the PATH environment variable to locate executable binary programs from any terminal directory.
+##
+Under PEP 668 and standard Python practices, why is it recommended to create a Virtual Environment (venv) for project development?
+A. It increases the execution speed of Python scripts by compiling them to standard C.
+B. It isolates project dependencies and prevents global package conflicts.
+C. It automatically converts Python scripts into interactive HTML web pages.
+D. It allows variables to be statically typed at compile time.
+@@
+B. It isolates project dependencies and prevents global package conflicts.
+Explanation: A virtual environment (venv) provides an isolated Python environment, ensuring package installations do not pollute global system files or break other projects (PEP 668).
+##
+Consider the Python statement: x = 10. What happens in memory when you execute a subsequent line: x = "Hello"?
+A. The integer object 10 is converted into a string in-place without changing its memory address.
+B. A TypeError is raised because Python does not allow changing variable types.
+C. The symbolic name tag x is rebound to a newly created string heap object "Hello".
+D. The compiler reserves 10 bytes of memory in the global call stack.
+@@
+C. The symbolic name tag x is rebound to a newly created string heap object "Hello".
+Explanation: In Python's dynamic typing model, variables are name tags pointing to heap objects. Reassigning a variable rebinds the tag to a new memory object.
+##
+Which of the following expressions evaluates to True under Python's truthiness rules?
+A. bool("")
+B. bool(0.0)
+C. bool("0")
+D. bool(None)
+@@
+C. bool("0")
+Explanation: Non-empty strings—even those containing "0" or "False"—are considered non-empty sequences and evaluate to True under truth value testing rules.
+##
+What is the result of the arithmetic expression 17 // 5 in Python 3?
+A. 3.4
+B. 3
+C. 2
+D. 3.0
+@@
+B. 3
+Explanation: Floor division (//) performs integer division and truncates/rounds down to the nearest lower integer (17 // 5 = 3).
+##
+What is the value of -17 // 5 in Python 3?
+A. -3
+B. -3.4
+C. -4
+D. -4.0
+@@
+C. -4
+Explanation: Floor division rounds down towards negative infinity. Since -17 / 5 = -3.4, rounding down yields -4.
+##
+Which operator tests whether two variables point to the exact same memory address in the heap (id(a) == id(b))?
+A. ==
+B. eq
+C. is
+D. in
+@@
+C. is
+Explanation: The is operator tests object identity (checking if id(a) == id(b) in memory), whereas == checks value equality.
+##
+Evaluate the following Python logical expression: True or False and False
+A. True
+B. False
+C. None
+D. SyntaxError
+@@
+A. True
+Explanation: Operator precedence evaluates logical and before or. First, False and False \rightarrow False. Then, True or False \rightarrow True.
+##
+What does the input() function in Python 3 always return?
+A. An int if digits are typed, otherwise a str
+B. A float if a decimal point is detected
+C. Always a str
+D. An untyped binary stream
+@@
+C. Always a str
+Explanation: The input() function reads input from standard input as text and always returns a string (str).
+##
+What design principle is emphasized by the Böhm-Jacopini theorem regarding algorithm design?
+A. Algorithms can only be written in compiled machine code.
+B. Any computable algorithm can be expressed using only three control structures: Sequence, Selection, and Repetition.
+C. All programs must utilize at least one recursion stack and two multi-way decision trees.
+D. Flowcharts must never exceed 10 physical pages.
+@@
+B. Any computable algorithm can be expressed using only three control structures: Sequence, Selection, and Repetition.
+Explanation: The Böhm-Jacopini theorem proves that any algorithm can be structured using only linear sequence, conditional branching, and looping structures.
+##
+What is the output of print(f"{1234.5678:,.2f}")?
+A. 1,234.56
+B. 1,234.57
+C. 1234.57
+D. 1 234,57
+@@
+B. 1,234.57
+Explanation: In f-string specifiers, , adds comma thousand separators and .2f rounds floating-point numbers to two decimal places.
+##
+What happens when an if-elif-else ladder evaluates a value, and multiple elif conditions evaluate to True?
+A. All matching branches are executed sequentially.
+B. Only the last matching branch is executed.
+C. Only the first matching branch is executed; all subsequent branches are skipped.
+D. A RuntimeError is raised due to ambiguous branching.
+@@
+C. Only the first matching branch is executed; all subsequent branches are skipped.
+Explanation: In an if-elif-else chain, execution flows sequentially until the first condition evaluates to True, runs its block, and jumps past the remainder of the ladder.
+##
+Which statement regarding Python's match-case construct (Python 3.10+) is correct?
+A. The wildcard case _: acts as the default fallback branch.
+B. break statements are required at the end of every case block to prevent fall-through.
+C. match-case can only compare integer constants.
+D. Pattern guards using if are not allowed inside case patterns.
+@@
+A. The wildcard case _: acts as the default fallback branch.
+Explanation: In match-case pattern matching, case _: serves as the catch-all wildcard branch (similar to default: in other languages).
+##
+In Python, what is the output of list(range(2, 10, 3))?
+A. [2, 5, 8]
+B. [2, 3, 4, 5, 6, 7, 8, 9, 10]
+C. [2, 5, 8, 11]
+D. [3, 6, 9]
+@@
+A. [2, 5, 8]
+Explanation: range(start, stop, step) starts at 2, increments by 3, and stops before reaching 10 (2, 2+3=5, 5+3=8).
+##
+What is the behavior of the else clause attached to a for or while loop?
+A. It executes continuously alongside every iteration of the loop body.
+B. It executes only if the loop is terminated prematurely by a break statement.
+C. It executes only if the loop completes all iterations naturally without encountering a break.
+D. It executes as a fallback when the loop condition raises an exception.
+@@
+C. It executes only if the loop completes all iterations naturally without encountering a break.
+Explanation: A loop's else clause runs if the loop exhausts its iterable or finishes its condition naturally, but is bypassed if a break statement exits the loop.
+##
+Which built-in function pair allows you to iterate over a list while simultaneously accessing both the current index and the element value?
+A. zip()
+B. enumerate()
+C. range()
+D. map()
+@@
+B. enumerate()
+Explanation: enumerate() wraps an iterable to yield (index, item) tuples during loop iterations.
+##
+What does the *args parameter in a Python function definition do?
+A. It packs extra keyword arguments into a dictionary.
+B. It forces all arguments to be passed as floating-point numbers.
+C. It packs an arbitrary number of positional arguments into a tuple.
+D. It multiplies the input values by the number of parameters.
+@@
+C. It packs an arbitrary number of positional arguments into a tuple.
+Explanation: The single asterisk *args collects extra positional arguments into a tuple within a function body.
+##
+According to the LEGB rule, what is the exact order Python uses to resolve variable name references?
+A. Local \rightarrow Enclosing \rightarrow Global \rightarrow Built-in
+B. Global \rightarrow Enclosing \rightarrow Local \rightarrow Built-in
+C. Built-in \rightarrow Global \rightarrow Enclosing \rightarrow Local
+D. Local \rightarrow Global \rightarrow Enclosing \rightarrow Built-in
+@@
+A. Local \rightarrow Enclosing \rightarrow Global \rightarrow Built-in
+Explanation: The LEGB rule defines Python's variable resolution order: local function scope first, followed by outer enclosing functions, global module scope, and built-in names.
+##
+Which parameter in the print() function controls the character printed between multiple comma-separated arguments?
+A. end
+B. sep
+C. fill
+D. align
+@@
+B. sep
+Explanation: The sep keyword parameter in print() sets the string separator inserted between arguments (default is ' ').
+##
+What causes a TypeError in Python?
+A. Forgetting a colon : at the end of an if statement.
+B. Referencing a variable name that has not been defined yet.
+C. Combining incompatible data types in an operation (e.g., "Age: " + 18).
+D. Indenting code using 3 spaces instead of 4 spaces.
+@@
+C. Combining incompatible data types in an operation (e.g., "Age: " + 18).
+Explanation: Operating on incompatible types (like concatenating a str and an int without explicit casting) raises a runtime TypeError.
+##
+Why should you avoid using a mutable default argument like def my_func(items=[])?
+A. Python will raise a SyntaxError upon defining the function.
+B. The same default list instance is shared across all function calls, leading to unintended side effects.
+C. The list will automatically convert into an immutable tuple after the first invocation.
+D. Mutable defaults crash the Python Virtual Machine (PVM).
+@@
+B. The same default list instance is shared across all function calls, leading to unintended side effects.
+Explanation: Default parameter expressions evaluate once when the function is defined, causing mutable objects like [] to persist state across repeated function calls.
+##
+What is the purpose of a Sentinel Value in algorithm design?
+A. A constant flag value used to immediately terminate an indefinite loop.
+B. A variable that counts the exact number of CPU clock cycles consumed.
+C. A special system key used to bypass encryption in database operations.
+D. A decorative marker placed at the beginning of pseudocode scripts.
+@@
+A. A constant flag value used to immediately terminate an indefinite loop.
+Explanation: A sentinel value is a sentinel flag (like entering -1) used by users to signal the end of data input in unbounded loops.
+##
+According to PEP 8 standards, how many spaces should be used per indentation level in Python source code?
+A. 2 spaces
+B. 4 spaces
+C. 1 tab character (8 space equivalent)
+D. Indentation depth is ignored by Python
+@@
+B. 4 spaces
+Explanation: PEP 8 style guidelines specify using 4 spaces per indentation level for readable and standard Python code.
+##
+What error occurs if an algorithm enters an state where a loop condition never evaluates to False and lacks an internal break?
+A. IndentationError
+B. Infinite Loop (Non-termination)
+C. Compilation Syntax Failure
+D. ZeroDivisionError
+@@
+B. Infinite Loop (Non-termination)
+Explanation: If a loop condition never becomes false and no break condition is hit, the program stays stuck in an infinite loop.
+##
+Which function call returns the unique memory address identifier of an object in CPython?
+A. type(obj)
+B. id(obj)
+C. ref(obj)
+D. addr(obj)
+@@
+B. id(obj)
+Explanation: id() returns the integer memory address identity of an object in memory.
+##
+__________: The manual, pencil-and-paper verification method used to trace the logical correctness of an algorithm step-by-step using a structured table before writing source code.
+@@
+Desk Checking (or Dry Running)
+##
+__________: The optimized, platform-neutral intermediate representation stored in .pyc files inside the __pycache__ folder after initial CPython compilation.
+@@
+Bytecode
+##
+__________: The term describing Python's feature where variable data types do not need to be declared explicitly and are detected automatically at runtime based on assigned values.
+@@
+Dynamic Typing
+##
+__________: The design collection of 19 software principles for Python readability displayable by entering import this in REPL.
+@@
+The Zen of Python (PEP 20)
+##
+__________: The specific boolean evaluation feature where Python stops evaluating a logical expression as soon as the overall outcome is mathematically guaranteed (e.g., stopping at False in an and sequence).
+@@
+Short-Circuit Evaluation
+##
+__________: The single-line Python expression form with syntax value_if_true if condition else value_if_false.
+@@
+Ternary Operator (or Conditional Expression)
+##
+__________: The standard command-line utility used in Python to manage, install, and freeze external package dependencies into a requirements.txt file.
+@@
+pip
+##
+__________: The structural anti-pattern characterized by excessive deeply nested if blocks that push code horizontally off the screen, reduced by flat defensive validation guards.
+@@
+Arrow Anti-Pattern (or Pyramid of Doom)
+##
+__________: The built-in Python parameter unpacking token (**kwargs) that collects extra keyword arguments into what specific collection data type?
+@@
+Dictionary (dict)
+##
+__________: The Python variable scope that encompasses top-level assignments made outside of any function definition within a single module file.
+@@
+Global Scope
+##
+Enumerate the 5 Core Properties of a Valid Algorithm defined by Donald Knuth.
+@@
+5 Core Properties of a Valid Algorithm:
+(41a) Finiteness
+(41b) Definiteness
+(41c) Input
+(41d) Output
+(41e) Effectiveness
+##
+Enumerate the 3 Fundamental Control Structures specified by the Böhm-Jacopini Theorem.
+@@
+3 Control Structures (Böhm-Jacopini Theorem):
+(42a) Sequence
+(42b) Selection (or Conditional Branching)
+(42c) Repetition (or Iteration / Looping)
+##
+Enumerate 4 Standard ANSI/ISO Flowchart Symbol Shapes and state their corresponding function.
+@@
+4 Standard Flowchart Symbols & Functions:
+(43a) Oval / Rounded Rectangle: Terminator (Start / End)
+(43b) Rectangle: Process (Operations / Assignments)
+(43c) Parallelogram: Input / Output operations
+(43d) Diamond: Decision (Conditional branching evaluation)
+##
+Enumerate 4 Values or Objects that evaluate to False (Falsy) during Python Truth Value Testing.
+@@
+4 Falsy Values in Python (Any 4 of the following):
+• None
+• False
+• Numeric zero (0, 0.0)
+• Empty collections/strings ("", [], (), {})
+##
+Enumerate the 4 Scoping Levels of the LEGB Hierarchy in order from innermost to outermost.
+@@
+LEGB Scoping Levels (Innermost to Outermost):
+(45a) Local (L)
+(45b) Enclosing (E)
+(45c) Global (G)
+(45d) Built-in (B)
+##
+Enumerate 3 Common Python Beginner Exceptions/Errors discussed in the lessons.
+@@
+3 Common Python Beginner Exceptions:
+• SyntaxError (or IndentationError)
+• NameError
+• TypeError
+##
+Enumerate the 3 Primitive Numeric / Logical Data Types in Python.
+@@
+3 Primitive Numeric / Logical Data Types:
+• int (Integer)
+• float (Floating-point)
+• bool (Boolean)
+##
+Enumerate 2 Terminal Commands used to manage virtual environments: one to create a venv and one to freeze installed dependencies.
+@@
+2 Terminal Virtual Environment Commands:
+(48a) Creation: python -m venv .venv
+(48b) Export Dependencies: pip freeze > requirements.txt
+##
+Enumerate 3 Loop Control Directives used to alter loop execution flow in Python.
+@@
+3 Loop Control Directives:
+• break
+• continue
+• pass
+##
+Enumerate the 3 Primary Application Domains of modern Python programming mentioned in Lesson 1 & 2.
+@@
+3 Modern Application Domains:
+• Web Development
+• Artificial Intelligence & Machine Learning
+• Data Science & Analytics (or Automation/Scripting)
+##
+Predict Output: What is printed by the following Python snippet?
+a = 10
+b = 3
+c = a % b ** 2
+print(c)
+@@
+Output: 1
+Explanation: Exponentiation ** has higher precedence than modulo %. b ** 2 = 3 ** 2 = 9. Then a \% 9 = 10 \% 9 = 1.
+##
+Predict Output: Determine the exact terminal output produced by this loop execution:
+for num in range(1, 5):
+    if num == 3:
+        continue
+    print(num, end="-")
+else:
+    print("DONE")
+@@
+Output: 1-2-4-DONE
+Explanation: The loop iterates over 1, 2, 3, 4. When num == 3, continue skips printing 3. 1, 2, and 4 are printed followed by -. Because the loop finishes without hitting a break, the else block executes and prints DONE.
+##
+Code Tracing: What will be the final value stored in variable total after running this snippet?
+total = 0
+values = [10, 15, 20, 25]
+for idx, val in enumerate(values):
+    if idx % 2 == 0:
+        total += val
+@@
+Value of total: 30
+Explanation: enumerate(values) pairs indices with values: (0, 10), (1, 15), (2, 20), (3, 25). Even indices (idx % 2 == 0) are 0 and 2. Their values are added to total: 10 + 20 = 30.
+##
+Predict Output: What is rendered to the terminal by the following conditional block?
+score = "0"
+if not score:
+    print("Empty")
+elif score == 0:
+    print("Zero Numeric")
+elif score:
+    print("Truthy String")
+else:
+    print("Default")
+@@
+Output: Truthy String
+Explanation: score contains the non-empty string "0". Since non-empty strings are truthy, not score is False. score == 0 evaluates to False (comparing str "0" with int 0). The condition elif score: evaluates to True, printing "Truthy String".
+##
+Identify the Bug: Point out the exact logical or syntax error in the code below designed to calculate average score, and explain how to fix it:
+score_1 = input("Enter first score: ")
+score_2 = input("Enter second score: ")
+average = (score_1 + score_2) / 2
+print(f"Average: {average}")
+@@
+Bug & Fix:
+Bug: input() returns strings. Using + concatenates the two input strings instead of performing mathematical addition, and dividing a string by 2 raises a TypeError.
+Fix: Cast inputs to numeric types (int or float) before operating:
+score_1 = float(input("Enter first score: "))
+score_2 = float(input("Enter second score: "))
+##
+Complete the Code: Fill in the missing header parameters ____ so that the function can process any count of positional numbers and sum them:
+def calculate_sum(____):
+    total = 0
+    for val in args:
+        total += val
+    return total
+
+print(calculate_sum(5, 10, 15)) # Target Output: 30
+@@
+Missing Code: *args
+Explanation: Using *args allows the function to accept an arbitrary number of positional arguments as a tuple.
+##
+Predict Output: What will be printed by the pattern match block below (Python 3.10+ syntax)?
+user_role = "FACULTY"
+status_code = 200
+
+match user_role:
+    case "STUDENT":
+        print("Student Portal")
+    case "FACULTY" if status_code == 404:
+        print("Faculty Not Found")
+    case "FACULTY" if status_code == 200:
+        print("Faculty Access Granted")
+    case _:
+        print("Access Denied")
+@@
+Output: Faculty Access Granted
+Explanation: user_role matches "FACULTY". The first faculty branch has a pattern guard if status_code == 404, which evaluates to False. The second faculty branch guard if status_code == 200 evaluates to True, so "Faculty Access Granted" is printed.
+##
+Trace Code & Scope: What value is printed by print(x) at the bottom of this script?
+x = 50
+
+def modify_value():
+    x = 100
+    return x
+
+modify_value()
+print(x)
+@@
+Output: 50
+Explanation: Inside modify_value(), x = 100 assigns a value to a local variable named x. It does not modify the global variable x outside the function. Thus, print(x) references the global x, which remains 50.
+##
+Write Simple Code: Write a clean, 2-line Python snippet using an inline ternary conditional statement that assigns "Pass" to variable result if grade is less than or equal to 3.0, and "Fail" otherwise.
+@@
+Code Snippet:
+grade = 2.0
+result = "Pass" if grade <= 3.0 else "Fail"
+Explanation: Uses an inline ternary expression (value_if_true if condition else value_if_false) to evaluate and assign the string conditionally.
+##
+Predict Output: What will be the output of this loop with a break keyword?
+count = 0
+while count < 5:
+    if count == 2:
+        break
+    count += 1
+else:
+    print("Loop Completed Cleanly")
+
+print(f"Final Count: {count}")
+@@
+Output: Final Count: 2
+Explanation: When count reaches 2, the if count == 2: condition becomes True and executes break. The break immediately terminates the while loop and skips its else block. The program then prints "Final Count: 2".`;
+const base=RAW.trim().split("\n##\n").map((b,i)=>{const [q,a]=b.split("\n@@\n");return{id:i+1,q,a}});
+const sec=n=>n<=30?"Multiple Choice":n<=40?"Identification":n<=50?"Enumeration":"Programming & Code Analysis";
+const $=id=>document.getElementById(id);
+let deck,i,st;
+function init(){deck=base.slice();i=0;st={};show()}
+function show(){
+  const c=deck[i],card=$("card");
+  card.classList.add("nt");card.classList.remove("flip");void card.offsetWidth;card.classList.remove("nt");
+  $("q").textContent=c.q;$("a").textContent=c.a;
+  $("ft").textContent="Item "+c.id+" · "+sec(c.id)+" · Question";
+  $("pos").textContent=(i+1)+" / "+deck.length;
+  $("fill").style.width=((i+1)/deck.length*100)+"%";
+  const s=st[c.id];$("mark").textContent=s==="k"?"✓ Known":s==="r"?"✕ Review":"";
+  const k=Object.values(st).filter(v=>v==="k").length,r=Object.values(st).filter(v=>v==="r").length;
+  $("sk").textContent="✓ Know: "+k;$("sr").textContent="✕ Review: "+r;$("su").textContent="Unmarked: "+(deck.length-k-r);
+}
+const flip=()=>$("card").classList.toggle("flip");
+const go=d=>{i=Math.min(deck.length-1,Math.max(0,i+d));show()};
+const mark=v=>{st[deck[i].id]=v;i<deck.length-1?go(1):show()};
+$("card").onclick=flip;
+$("card").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();flip()}};
+document.onkeydown=e=>{if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1)};
+$("prev").onclick=()=>go(-1);$("next").onclick=()=>go(1);
+$("know").onclick=()=>mark("k");$("rev").onclick=()=>mark("r");
+$("shuf").onclick=()=>{for(let n=deck.length-1;n>0;n--){const j=Math.floor(Math.random()*(n+1));[deck[n],deck[j]]=[deck[j],deck[n]]}i=0;show()};
+$("reset").onclick=init;
+init();
+</script></body></html>
